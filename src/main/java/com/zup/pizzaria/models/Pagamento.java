@@ -9,13 +9,11 @@ public class Pagamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long pedidoId;
     private String formaPagamento;
     private BigDecimal valorPago;
     private LocalDateTime dataHoraPagamento;
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -54,5 +52,11 @@ public class Pagamento {
 
     public void setDataHoraPagamento(LocalDateTime dataHoraPagamento) {
         this.dataHoraPagamento = dataHoraPagamento;
+    }
+
+    public void validarPagamento(BigDecimal valorTotalPedido) {
+        if (valorPago.compareTo(valorTotalPedido) < 0) {
+            throw new IllegalArgumentException("O valor pago não pode ser menor que o valor total do pedido.");
+        }
     }
 }
